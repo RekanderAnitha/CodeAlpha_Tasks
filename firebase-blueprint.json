@@ -1,0 +1,124 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores student and admin profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "department": { "type": "string" },
+        "semester": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Notice": {
+      "title": "Notice/Announcement",
+      "description": "Important alerts and notices for students.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string", "enum": ["Exams", "Seminars", "Workshops", "Fests", "Circulars", "Holidays"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "authorId": { "type": "string" }
+      },
+      "required": ["title", "content", "category", "createdAt"]
+    },
+    "Event": {
+      "title": "College Event",
+      "description": "Upcoming events like fests, seminars, and workshops.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "location": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "date", "category"]
+    },
+    "Timetable": {
+      "title": "Weekly Timetable",
+      "description": "Schedule of classes for a specific department and semester.",
+      "type": "object",
+      "properties": {
+        "department": { "type": "string" },
+        "semester": { "type": "string" },
+        "day": { "type": "string", "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] },
+        "slots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "subject": { "type": "string" },
+              "time": { "type": "string" },
+              "faculty": { "type": "string" },
+              "isLab": { "type": "boolean" }
+            }
+          }
+        }
+      },
+      "required": ["department", "semester", "day", "slots"]
+    },
+    "Note": {
+      "title": "Study Note/PDF",
+      "description": "Uploaded PDF notes and study materials.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "department": { "type": "string" },
+        "semester": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "fileName": { "type": "string" },
+        "uploadedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "fileUrl", "createdAt"]
+    },
+    "Attendance": {
+      "title": "Attendance record",
+      "description": "Tracks manual attendance for students.",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "subject": { "type": "string" },
+        "presentCount": { "type": "number" },
+        "totalCount": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["studentId", "subject", "presentCount", "totalCount"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Individual user profiles."
+    },
+    "/notices/{noticeId}": {
+      "schema": "Notice",
+      "description": "Global notices and announcements."
+    },
+    "/events/{eventId}": {
+      "schema": "Event",
+      "description": "College-wide events."
+    },
+    "/timetables/{timetableId}": {
+      "schema": "Timetable",
+      "description": "Class schedules."
+    },
+    "/notes/{noteId}": {
+      "schema": "Note",
+      "description": "Shared study materials."
+    },
+    "/users/{userId}/attendance/{attendanceId}": {
+      "schema": "Attendance",
+      "description": "Student-specific attendance records."
+    }
+  }
+}

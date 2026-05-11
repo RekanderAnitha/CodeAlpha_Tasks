@@ -1,0 +1,13 @@
+{
+  "name": "Campus Vault",
+  "description": "A high-end academic management system for students featuring real-time notices, event chronicles, attendance matrix, and digital resources.",
+  "requestFramePermissions": [
+    "notifications"
+  ],
+  "majorCapabilities": [
+    "Firebase Authentication",
+    "Cloud Firestore",
+    "Firebase Storage",
+    "Push Notifications"
+  ]
+}
